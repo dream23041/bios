@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bio Page</title>
+    <title>Bio</title>
     <style>
         :root {
             --primary-color: #1a1a2e;
@@ -450,12 +450,11 @@
         
         <section class="profile">
             <div class="profile-image-container fade-in">
-                <!-- Моя аватарка -->
                 <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="Моя аватарка" class="profile-image">
                 <div class="circle-border"></div>
             </div>
-            <h1 class="fade-in delay-1">Алексей Петров</h1>
-            <p class="fade-in delay-2">Software Developer с 5-летним опытом. Специализируюсь на разработке нативных приложений и системного программирования с использованием Java, Kotlin и C++.</p>
+            <h1 class="fade-in delay-1">Dream</h1>
+            <p class="fade-in delay-2">Software Developer с 3-летним опытом. Специализируюсь на разработке нативных приложений и системного программирования с использованием Java, Kotlin и C++.</p>
             
             <div class="skills fade-in delay-3">
                 <div class="skill">Java</div>
@@ -483,7 +482,7 @@
                 <div class="stat-label">Завершенных проектов</div>
             </div>
             <div class="stat">
-                <div class="stat-value">5+</div>
+                <div class="stat-value">2,5+</div>
                 <div class="stat-label">Лет опыта</div>
             </div>
         </div>
@@ -543,13 +542,12 @@
         </section>
         
         <footer class="fade-in delay-4">
-            <p>© 2023 Алексей Петров. Все права защищены.</p>
-            <p>Сайт создан с использованием HTML, CSS и JavaScript</p>
+            <p>© 2025 . Все права защищены.</p>
+            <p>Сайт создал для развлечения себя</p>
         </footer>
     </div>
 
     <script>
-        // Создание частиц
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 40;
@@ -572,7 +570,6 @@
             }
         }
 
-        // Переключение темы
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = themeToggle.querySelector('i');
         
@@ -587,11 +584,9 @@
                 themeIcon.classList.add('fa-moon');
             }
             
-            // Сохраняем выбор темы
             localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
         });
 
-        // Загрузка сохраненной темы
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.body.classList.add('light-theme');
@@ -599,11 +594,9 @@
             themeIcon.classList.add('fa-sun');
         }
 
-        // Статистика
         let viewCount = parseInt(localStorage.getItem('viewCount')) || 0;
         let totalClicks = parseInt(localStorage.getItem('totalClicks')) || 0;
         
-        // Счетчики кликов по ссылкам
         const linkClicks = {
             telegram: parseInt(localStorage.getItem('telegramClicks')) || 0,
             telegramChannel: parseInt(localStorage.getItem('telegramChannelClicks')) || 0,
@@ -613,7 +606,6 @@
             discord: parseInt(localStorage.getItem('discordClicks')) || 0
         };
 
-        // Обновление счетчиков на странице
         function updateCounters() {
             document.getElementById('viewCount').textContent = viewCount;
             document.getElementById('totalClicks').textContent = totalClicks;
@@ -626,11 +618,9 @@
             document.getElementById('discordClicks').textContent = linkClicks.discord;
         }
 
-        // Увеличение счетчика просмотров
         viewCount++;
         localStorage.setItem('viewCount', viewCount);
 
-        // Обработчики кликов по ссылкам
         document.querySelectorAll('.link-card').forEach(card => {
             card.addEventListener('click', function() {
                 const linkType = this.getAttribute('data-link');
@@ -642,21 +632,29 @@
                 
                 updateCounters();
                 
-                // Визуальная обратная связь
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 150);
-                
-                // Здесь можно добавить реальные ссылки
-                // window.open('your-link-here', '_blank');
+
+                const links = {
+                    'telegram': 'https://t.me/dream23041',
+                    'telegram-channel': 'https://t.me/DigitalDreamX01',
+                    'bot': 'https://t.me/StateWar_Bot',
+                    'bot-channel': 'https://t.me/StateWarOfficial',
+                    'github': 'https://github.com/dream23041',
+                    'discord': 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.meme-arsenal.com%2Fmemes%2F8dc2509873205fd7fde9b73e48870cbe.jpg&f=1&nofb=1&ipt=88e48baebe203d6f9d2c87a27fbd8546f85670f0477ee144ff6c07abb4ed0b51'
+                };
+        
+                if (links[linkType]) {
+                    window.open(links[linkType], '_blank');
+                }
             });
         });
 
-        // Добавление призраков к случайным карточкам
         function addGhosts() {
             const cards = document.querySelectorAll('.link-card');
-            const ghostCards = [0, 4]; // Индексы карточек с призраками
+            const ghostCards = [0, 4];
             
             ghostCards.forEach(index => {
                 if (cards[index]) {
@@ -667,12 +665,10 @@
             });
         }
 
-        // Инициализация
         createParticles();
         updateCounters();
         addGhosts();
         
-        // Анимация появления элементов при загрузке
         window.addEventListener('load', () => {
             document.querySelectorAll('.fade-in').forEach(el => {
                 el.style.animationPlayState = 'running';
