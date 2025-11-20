@@ -6,23 +6,23 @@
     <title>Bio Page</title>
     <style>
         :root {
-            --primary-color: #6a11cb;
-            --secondary-color: #2575fc;
-            --bg-color: rgba(255, 255, 255, 0.1);
-            --text-color: #333;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --accent-color: #ff6b6b;
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --highlight-color: #e94560;
+            --text-color: #f0f0f0;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
         }
 
-        .dark-theme {
-            --primary-color: #8a2be2;
-            --secondary-color: #4a00e0;
-            --bg-color: rgba(0, 0, 0, 0.1);
-            --text-color: #f0f0f0;
-            --card-bg: rgba(0, 0, 0, 0.7);
-            --shadow-color: rgba(255, 255, 255, 0.1);
-            --accent-color: #ff9e7d;
+        .light-theme {
+            --primary-color: #f8f9fa;
+            --secondary-color: #e9ecef;
+            --accent-color: #adb5bd;
+            --highlight-color: #4361ee;
+            --text-color: #212529;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -53,17 +53,26 @@
 
         .particle {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.5);
+            background: radial-gradient(circle, var(--highlight-color), transparent);
             border-radius: 50%;
-            animation: float 15s infinite linear;
+            animation: float 20s infinite linear;
+            opacity: 0.7;
         }
 
         @keyframes float {
             0% {
                 transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
             }
             100% {
                 transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
             }
         }
 
@@ -81,6 +90,14 @@
             position: relative;
         }
 
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--highlight-color), #ff9e7d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .theme-toggle {
             background: var(--card-bg);
             border: none;
@@ -95,6 +112,11 @@
             backdrop-filter: blur(10px);
             font-size: 1.5rem;
             color: var(--text-color);
+            transition: transform 0.3s;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
         }
 
         .profile {
@@ -120,18 +142,19 @@
             z-index: 2;
             position: relative;
             border: 5px solid var(--card-bg);
-            box-shadow: 0 0 20px var(--shadow-color);
+            box-shadow: 0 0 30px var(--shadow-color);
+            filter: brightness(1.1) contrast(1.1);
         }
 
         .circle-border {
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 3px dashed var(--accent-color);
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 3px dashed var(--highlight-color);
             border-radius: 50%;
-            animation: spin 20s linear infinite;
+            animation: spin 25s linear infinite;
             z-index: 1;
         }
 
@@ -145,9 +168,13 @@
         }
 
         .profile h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 10px;
             text-align: center;
+            background: linear-gradient(45deg, var(--text-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .profile p {
@@ -155,6 +182,8 @@
             text-align: center;
             max-width: 600px;
             line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.9;
         }
 
         .skills {
@@ -167,10 +196,18 @@
 
         .skill {
             background: var(--card-bg);
-            padding: 10px 20px;
-            border-radius: 20px;
+            padding: 12px 25px;
+            border-radius: 25px;
             box-shadow: 0 4px 15px var(--shadow-color);
             backdrop-filter: blur(10px);
+            font-weight: 500;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .skill:hover {
+            transform: translateY(-5px);
+            background: var(--highlight-color);
         }
 
         .stats {
@@ -182,56 +219,87 @@
 
         .stat {
             background: var(--card-bg);
-            padding: 15px 25px;
-            border-radius: 15px;
+            padding: 20px 30px;
+            border-radius: 20px;
             text-align: center;
             box-shadow: 0 4px 15px var(--shadow-color);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat:hover {
+            transform: translateY(-5px);
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: bold;
-            color: var(--accent-color);
+            color: var(--highlight-color);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .stat-label {
             font-size: 0.9rem;
             opacity: 0.8;
+            margin-top: 5px;
         }
 
         .links {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
             margin: 40px 0;
         }
 
         .link-card {
             background: var(--card-bg);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 25px;
             text-align: center;
-            box-shadow: 0 4px 15px var(--shadow-color);
+            box-shadow: 0 4px 20px var(--shadow-color);
             backdrop-filter: blur(10px);
             position: relative;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--highlight-color), #ff9e7d);
         }
 
         .link-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px var(--shadow-color);
         }
 
         .link-card i {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--accent-color);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--highlight-color);
+            transition: transform 0.3s;
+        }
+
+        .link-card:hover i {
+            transform: scale(1.2);
         }
 
         .link-card h3 {
             margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .link-card p {
+            opacity: 0.8;
+            margin-bottom: 15px;
         }
 
         .link-card .clicks {
@@ -242,74 +310,111 @@
 
         .ghost {
             position: absolute;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="white" d="M40.1 467.1l-11.2 9c-3.2 2.5-7.1 3.9-11.1 3.9-8.6 0-16.6-6.2-16.6-16.6V16.6C1.2 6.2 9.2 0 17.8 0c4 0 7.9 1.4 11.1 3.9l11.2 9c115.6 92.8 229.8 92.8 345.4 0l11.2-9c3.2-2.5 7.1-3.9 11.1-3.9 8.6 0 16.6 6.2 16.6 16.6v464.4c0 10.4-8 16.6-16.6 16.6-4 0-7.9-1.4-11.1-3.9l-11.2-9c-115.6-92.8-229.8-92.8-345.4 0z"/></svg>') no-repeat center;
             background-size: contain;
             opacity: 0.7;
-            animation: ghostFloat 8s infinite ease-in-out;
+            animation: ghostFloat 10s infinite ease-in-out;
             pointer-events: none;
             z-index: 10;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
         }
 
         @keyframes ghostFloat {
             0%, 100% {
-                transform: translateY(0) translateX(0);
+                transform: translateY(0) translateX(0) scale(1);
             }
             25% {
-                transform: translateY(-20px) translateX(10px);
+                transform: translateY(-20px) translateX(15px) scale(1.1);
             }
             50% {
-                transform: translateY(-10px) translateX(20px);
+                transform: translateY(-10px) translateX(25px) scale(1);
             }
             75% {
-                transform: translateY(-15px) translateX(-10px);
+                transform: translateY(-15px) translateX(-15px) scale(1.1);
             }
         }
 
-        .game-link {
+        .game-section {
             background: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 4px 15px var(--shadow-color);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 4px 25px var(--shadow-color);
             backdrop-filter: blur(10px);
-            margin: 40px 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            margin: 50px 0;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .game-link h2 {
-            margin-bottom: 10px;
+        .game-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, var(--text-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .game-section p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .game-button {
-            background: var(--accent-color);
+            background: linear-gradient(45deg, var(--highlight-color), #ff9e7d);
             border: none;
-            border-radius: 10px;
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            border-radius: 15px;
+            padding: 18px 35px;
+            font-size: 1.3rem;
             color: white;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
         }
 
         .game-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             margin-top: 40px;
             opacity: 0.7;
             font-size: 0.9rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
+
+        /* Анимация появления элементов */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Задержки для анимации */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
 
         @media (max-width: 768px) {
             .links {
@@ -322,7 +427,11 @@
             }
             
             .profile h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .game-section {
+                padding: 25px;
             }
         }
     </style>
@@ -333,46 +442,53 @@
     
     <div class="container">
         <header>
-            <h1>Bio Page</h1>
+            <div class="logo">DevBio</div>
             <button class="theme-toggle" id="themeToggle">
                 <i class="fas fa-moon"></i>
             </button>
         </header>
         
         <section class="profile">
-            <div class="profile-image-container">
-                <img src="https://via.placeholder.com/200" alt="Profile" class="profile-image">
+            <div class="profile-image-container fade-in">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&h=200&q=80" alt="Profile" class="profile-image">
                 <div class="circle-border"></div>
             </div>
-            <h1>Ваше Имя</h1>
-            <p>Разработчик с опытом создания современных веб-приложений. Увлекаюсь созданием интерактивных интерфейсов и изучением новых технологий.</p>
+            <h1 class="fade-in delay-1">Алексей Петров</h1>
+            <p class="fade-in delay-2">Full-stack разработчик с 5-летним опытом. Специализируюсь на создании современных веб-приложений с использованием React, Node.js и облачных технологий.</p>
             
-            <div class="skills">
+            <div class="skills fade-in delay-3">
                 <div class="skill">JavaScript</div>
                 <div class="skill">React</div>
                 <div class="skill">Node.js</div>
+                <div class="skill">TypeScript</div>
                 <div class="skill">Python</div>
                 <div class="skill">UI/UX Design</div>
+                <div class="skill">MongoDB</div>
+                <div class="skill">Docker</div>
             </div>
         </section>
         
-        <div class="stats">
+        <div class="stats fade-in delay-4">
             <div class="stat">
                 <div class="stat-value" id="viewCount">0</div>
-                <div class="stat-label">Просмотров</div>
+                <div class="stat-label">Просмотров профиля</div>
             </div>
             <div class="stat">
                 <div class="stat-value" id="totalClicks">0</div>
                 <div class="stat-label">Всего кликов</div>
             </div>
             <div class="stat">
-                <div class="stat-value" id="projectsCount">12</div>
-                <div class="stat-label">Проектов</div>
+                <div class="stat-value">24</div>
+                <div class="stat-label">Завершенных проектов</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">3.5+</div>
+                <div class="stat-label">Лет опыта</div>
             </div>
         </div>
         
         <div class="links">
-            <div class="link-card" data-link="telegram">
+            <div class="link-card fade-in delay-1" data-link="telegram">
                 <i class="fab fa-telegram"></i>
                 <h3>Telegram</h3>
                 <p>Написать в личные сообщения</p>
@@ -380,28 +496,28 @@
                 <div class="ghost"></div>
             </div>
             
-            <div class="link-card" data-link="telegram-channel">
+            <div class="link-card fade-in delay-2" data-link="telegram-channel">
                 <i class="fab fa-telegram"></i>
                 <h3>Telegram Канал</h3>
                 <p>Подписаться на мой канал</p>
                 <div class="clicks">Кликов: <span id="telegramChannelClicks">0</span></div>
             </div>
             
-            <div class="link-card" data-link="bot">
+            <div class="link-card fade-in delay-3" data-link="bot">
                 <i class="fas fa-robot"></i>
                 <h3>Telegram Бот</h3>
                 <p>Проверить моего бота</p>
                 <div class="clicks">Кликов: <span id="botClicks">0</span></div>
             </div>
             
-            <div class="link-card" data-link="bot-channel">
+            <div class="link-card fade-in delay-4" data-link="bot-channel">
                 <i class="fas fa-robot"></i>
                 <h3>Канал Бота</h3>
                 <p>Подписаться на канал бота</p>
                 <div class="clicks">Кликов: <span id="botChannelClicks">0</span></div>
             </div>
             
-            <div class="link-card" data-link="github">
+            <div class="link-card fade-in delay-5" data-link="github">
                 <i class="fab fa-github"></i>
                 <h3>GitHub</h3>
                 <p>Посмотреть мои проекты</p>
@@ -409,7 +525,7 @@
                 <div class="ghost"></div>
             </div>
             
-            <div class="link-card" data-link="discord">
+            <div class="link-card fade-in delay-1" data-link="discord">
                 <i class="fab fa-discord"></i>
                 <h3>Discord</h3>
                 <p>Присоединиться к серверу</p>
@@ -417,16 +533,17 @@
             </div>
         </div>
         
-        <section class="game-link">
-            <h2>Хочешь поиграть?</h2>
-            <p>Попробуй мою кликер-игру с системой прокачки и магазином улучшений!</p>
+        <section class="game-section fade-in delay-3">
+            <h2>Мини-игра: Кликер</h2>
+            <p>Прокачивай клики, покупай улучшения и соревнуйся с другими игроками! Зарабатывай очки и открывай достижения.</p>
             <a href="clicker.html" class="game-button">
                 <i class="fas fa-gamepad"></i> Играть в кликер
             </a>
         </section>
         
-        <footer>
-            <p>© 2023 Ваше Имя. Все права защищены.</p>
+        <footer class="fade-in delay-4">
+            <p>© 2023 Алексей Петров. Все права защищены.</p>
+            <p>Сайт создан с использованием HTML, CSS и JavaScript</p>
         </footer>
     </div>
 
@@ -434,22 +551,21 @@
         // Создание частиц
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
+            const particleCount = 40;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 10 + 5;
+                const size = Math.random() * 15 + 5;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 
-                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDuration = `${Math.random() * 25 + 15}s`;
                 particle.style.animationDelay = `${Math.random() * 5}s`;
-                particle.style.opacity = Math.random() * 0.5 + 0.2;
                 
                 particlesContainer.appendChild(particle);
             }
@@ -460,9 +576,9 @@
         const themeIcon = themeToggle.querySelector('i');
         
         themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
+            document.body.classList.toggle('light-theme');
             
-            if (document.body.classList.contains('dark-theme')) {
+            if (document.body.classList.contains('light-theme')) {
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
             } else {
@@ -471,13 +587,13 @@
             }
             
             // Сохраняем выбор темы
-            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
         });
 
         // Загрузка сохраненной темы
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
             themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
         }
@@ -525,22 +641,42 @@
                 
                 updateCounters();
                 
+                // Визуальная обратная связь
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
                 // Здесь можно добавить реальные ссылки
                 // window.open('your-link-here', '_blank');
-                
-                // Временное сообщение о переходе
-                const originalText = this.querySelector('h3').textContent;
-                this.querySelector('h3').textContent = 'Переход...';
-                
-                setTimeout(() => {
-                    this.querySelector('h3').textContent = originalText;
-                }, 1000);
             });
         });
+
+        // Добавление призраков к случайным карточкам
+        function addGhosts() {
+            const cards = document.querySelectorAll('.link-card');
+            const ghostCards = [0, 4]; // Индексы карточек с призраками
+            
+            ghostCards.forEach(index => {
+                if (cards[index]) {
+                    const ghost = document.createElement('div');
+                    ghost.classList.add('ghost');
+                    cards[index].appendChild(ghost);
+                }
+            });
+        }
 
         // Инициализация
         createParticles();
         updateCounters();
+        addGhosts();
+        
+        // Анимация появления элементов при загрузке
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.fade-in').forEach(el => {
+                el.style.animationPlayState = 'running';
+            });
+        });
     </script>
 </body>
 </html>
