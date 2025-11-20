@@ -683,12 +683,10 @@
     </div>
 
     <script>
-        // Игровые переменные
         let coins = parseInt(localStorage.getItem('coins')) || 0;
         let totalClicks = parseInt(localStorage.getItem('totalClicks')) || 0;
         let coinsPerSecond = parseInt(localStorage.getItem('coinsPerSecond')) || 0;
         
-        // Улучшения
         let clickPower = parseInt(localStorage.getItem('clickPower')) || 1;
         let clickPowerLevel = parseInt(localStorage.getItem('clickPowerLevel')) || 1;
         let clickPowerCost = parseInt(localStorage.getItem('clickPowerCost')) || 10;
@@ -709,7 +707,6 @@
         let criticalClickLevel = parseInt(localStorage.getItem('criticalClickLevel')) || 0;
         let criticalClickCost = parseInt(localStorage.getItem('criticalClickCost')) || 500;
         
-        // Достижения
         const achievements = {
             '100-clicks': localStorage.getItem('achievement-100-clicks') === 'true',
             '1000-coins': localStorage.getItem('achievement-1000-coins') === 'true',
@@ -718,12 +715,10 @@
             'critical': localStorage.getItem('achievement-critical') === 'true'
         };
         
-        // Состояние кнопки
         let isClickButtonEnabled = true;
         let cooldownProgress = 0;
         let cooldownInterval;
         
-        // Создание частиц
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             const particleCount = 30;
@@ -746,7 +741,6 @@
             }
         }
         
-        // Переключение темы
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = themeToggle.querySelector('i');
         
@@ -764,7 +758,6 @@
             localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
         });
         
-        // Загрузка сохраненной темы
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.body.classList.add('light-theme');
@@ -772,7 +765,6 @@
             themeIcon.classList.add('fa-sun');
         }
         
-        // Обновление интерфейса
         function updateUI() {
             document.getElementById('coins').textContent = formatNumber(coins);
             document.getElementById('coinCount').textContent = formatNumber(coins);
@@ -801,7 +793,6 @@
             document.getElementById('criticalClickLevel').textContent = criticalClickLevel;
             document.getElementById('criticalClickCost').textContent = formatNumber(criticalClickCost);
             
-            // Обновление состояний кнопок
             document.getElementById('buyClickPower').disabled = coins < clickPowerCost;
             document.getElementById('buyClickCooldown').disabled = coins < clickCooldownCost;
             document.getElementById('buyBasicAutoClicker').disabled = coins < basicAutoClickerCost;
@@ -809,11 +800,9 @@
             document.getElementById('buyProAutoClicker').disabled = coins < proAutoClickerCost;
             document.getElementById('buyCriticalClick').disabled = coins < criticalClickCost;
             
-            // Обновление достижений
             updateAchievements();
         }
 
-        // Форматирование чисел
         function formatNumber(num) {
             if (num >= 1000000) {
                 return (num / 1000000).toFixed(1) + 'M';
@@ -824,13 +813,11 @@
             return num;
         }
         
-        // Обработчик клика
         const clickButton = document.getElementById('clickButton');
         
         clickButton.addEventListener('click', function() {
             if (!isClickButtonEnabled) return;
             
-            // Расчет урона с учетом крита
             let damage = clickPower;
             let isCritical = false;
             
@@ -840,27 +827,22 @@
                 if (!achievements['critical']) {
                     achievements['critical'] = true;
                     localStorage.setItem('achievement-critical', 'true');
-                    coins += 200; // Награда за достижение
+                    coins += 200;
                 }
             }
             
-            // Добавление монет
             coins += damage;
             totalClicks++;
             
-            // Создание плавающей монеты
             createFloatingCoin(damage, isCritical);
             
-            // Сохранение и обновление
             saveGame();
             updateUI();
             checkAchievements();
             
-            // Кулдаун
             startCooldown();
         });
         
-        // Запуск кулдауна
         function startCooldown() {
             isClickButtonEnabled = false;
             clickButton.classList.add('disabled');
@@ -882,7 +864,6 @@
             }, clickCooldown / 10);
         }
         
-        // Создание плавающей монеты
         function createFloatingCoin(value, isCritical = false) {
             const coin = document.createElement('div');
             coin.classList.add('floating-coin');
@@ -899,7 +880,6 @@
             }, 1000);
         }
         
-        // Покупка улучшений
         document.getElementById('buyClickPower').addEventListener('click', function() {
             if (coins < clickPowerCost) return;
             
@@ -933,7 +913,6 @@
             basicAutoClickers++;
             basicAutoClickerCost = Math.floor(basicAutoClickerCost * 1.4);
             
-            // Пересчет монет в секунду
             coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 3) + (proAutoClickers * 10);
             
             saveGame();
@@ -948,7 +927,6 @@
             advancedAutoClickers++;
             advancedAutoClickerCost = Math.floor(advancedAutoClickerCost * 1.4);
             
-            // Пересчет монет в секунду
             coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 3) + (proAutoClickers * 10);
             
             saveGame();
@@ -963,7 +941,6 @@
             proAutoClickers++;
             proAutoClickerCost = Math.floor(proAutoClickerCost * 1.4);
             
-            // Пересчет монет в секунду
             coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 3) + (proAutoClickers * 10);
             
             saveGame();
@@ -971,4 +948,101 @@
             checkAchievements();
         });
 
-        document.getElementById('buyCriticalClick').addEventListener('click', function
+        document.getElementById('buyCriticalClick').addEventListener('click', function() {
+            if (coins < criticalClickCost) return;
+            
+            coins -= criticalClickCost;
+            criticalClickLevel++;
+            criticalClickCost = Math.floor(criticalClickCost * 2);
+            
+            saveGame();
+            updateUI();
+            checkAchievements();
+        });
+        
+        function autoCollectCoins() {
+            if (coinsPerSecond > 0) {
+                coins += coinsPerSecond;
+                saveGame();
+                updateUI();
+                checkAchievements();
+            }
+        }
+        
+        function checkAchievements() {
+            if (totalClicks >= 100 && !achievements['100-clicks']) {
+                achievements['100-clicks'] = true;
+                localStorage.setItem('achievement-100-clicks', 'true');
+                coins += 100; 
+            }
+            
+            if (coins >= 1000 && !achievements['1000-coins']) {
+                achievements['1000-coins'] = true;
+                localStorage.setItem('achievement-1000-coins', 'true');
+                coins += 500;
+            }
+            
+            if ((clickPowerLevel > 1 || clickCooldownLevel > 1) && !achievements['first-upgrade']) {
+                achievements['first-upgrade'] = true;
+                localStorage.setItem('achievement-first-upgrade', 'true');
+                coins += 50;
+            }
+            
+            if ((basicAutoClickers > 0 || advancedAutoClickers > 0 || proAutoClickers > 0) && !achievements['auto-clicker']) {
+                achievements['auto-clicker'] = true;
+                localStorage.setItem('achievement-auto-clicker', 'true');
+                coins += 100;
+            }
+        }
+        
+        function updateAchievements() {
+            for (const achievement in achievements) {
+                const element = document.getElementById(`achievement-${achievement}`);
+                if (element) {
+                    if (achievements[achievement]) {
+                        element.classList.add('unlocked');
+                    } else {
+                        element.classList.remove('unlocked');
+                    }
+                }
+            }
+        }
+        
+        function saveGame() {
+            localStorage.setItem('coins', coins);
+            localStorage.setItem('totalClicks', totalClicks);
+            localStorage.setItem('coinsPerSecond', coinsPerSecond);
+            
+            localStorage.setItem('clickPower', clickPower);
+            localStorage.setItem('clickPowerLevel', clickPowerLevel);
+            localStorage.setItem('clickPowerCost', clickPowerCost);
+            
+            localStorage.setItem('clickCooldown', clickCooldown);
+            localStorage.setItem('clickCooldownLevel', clickCooldownLevel);
+            localStorage.setItem('clickCooldownCost', clickCooldownCost);
+            
+            localStorage.setItem('basicAutoClickers', basicAutoClickers);
+            localStorage.setItem('basicAutoClickerCost', basicAutoClickerCost);
+            
+            localStorage.setItem('advancedAutoClickers', advancedAutoClickers);
+            localStorage.setItem('advancedAutoClickerCost', advancedAutoClickerCost);
+
+            localStorage.setItem('proAutoClickers', proAutoClickers);
+            localStorage.setItem('proAutoClickerCost', proAutoClickerCost);
+
+            localStorage.setItem('criticalClickLevel', criticalClickLevel);
+            localStorage.setItem('criticalClickCost', criticalClickCost);
+        }
+        
+        function initGame() {
+            createParticles();
+            updateUI();
+            updateAchievements();
+            
+            setInterval(autoCollectCoins, 1000);
+        }
+        
+        initGame();
+    </script>
+</body>
+</html>
