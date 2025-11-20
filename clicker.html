@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кликер Игра</title>
+    <title>Clicker</title>
     <style>
         :root {
-            --primary-color: #6a11cb;
-            --secondary-color: #2575fc;
-            --bg-color: rgba(255, 255, 255, 0.1);
-            --text-color: #333;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --accent-color: #ff6b6b;
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #0f3460;
+            --highlight-color: #e94560;
             --coin-color: #ffd700;
+            --text-color: #f0f0f0;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.3);
         }
 
-        .dark-theme {
-            --primary-color: #8a2be2;
-            --secondary-color: #4a00e0;
-            --bg-color: rgba(0, 0, 0, 0.1);
-            --text-color: #f0f0f0;
-            --card-bg: rgba(0, 0, 0, 0.7);
-            --shadow-color: rgba(255, 255, 255, 0.1);
-            --accent-color: #ff9e7d;
+        .light-theme {
+            --primary-color: #f8f9fa;
+            --secondary-color: #e9ecef;
+            --accent-color: #adb5bd;
+            --highlight-color: #4361ee;
             --coin-color: #ffcc00;
+            --text-color: #212529;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --shadow-color: rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -55,17 +55,26 @@
 
         .particle {
             position: absolute;
-            background-color: rgba(255, 255, 255, 0.5);
+            background: radial-gradient(circle, var(--highlight-color), transparent);
             border-radius: 50%;
-            animation: float 15s infinite linear;
+            animation: float 20s infinite linear;
+            opacity: 0.7;
         }
 
         @keyframes float {
             0% {
                 transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
             }
             100% {
                 transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
             }
         }
 
@@ -86,8 +95,8 @@
         .back-button {
             background: var(--card-bg);
             border: none;
-            border-radius: 10px;
-            padding: 10px 20px;
+            border-radius: 15px;
+            padding: 12px 25px;
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -97,6 +106,12 @@
             font-size: 1rem;
             color: var(--text-color);
             text-decoration: none;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
         }
 
         .theme-toggle {
@@ -113,12 +128,21 @@
             backdrop-filter: blur(10px);
             font-size: 1.5rem;
             color: var(--text-color);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
         }
 
         h1 {
             text-align: center;
             margin: 20px 0;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
+            background: linear-gradient(45deg, var(--text-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .game-container {
@@ -128,7 +152,7 @@
             margin-top: 30px;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 968px) {
             .game-container {
                 grid-template-columns: 1fr;
             }
@@ -136,76 +160,93 @@
 
         .clicker-section {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 30px;
             text-align: center;
-            box-shadow: 0 4px 15px var(--shadow-color);
+            box-shadow: 0 4px 25px var(--shadow-color);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .stats {
             display: flex;
             justify-content: space-around;
             margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .stat {
             text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 15px;
+            min-width: 120px;
         }
 
         .stat-value {
             font-size: 1.8rem;
             font-weight: bold;
-            color: var(--accent-color);
+            color: var(--highlight-color);
         }
 
         .stat-label {
             font-size: 0.9rem;
             opacity: 0.8;
+            margin-top: 5px;
         }
 
         .coin-display {
-            font-size: 2rem;
-            margin: 20px 0;
+            font-size: 2.2rem;
+            margin: 25px 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 20px;
         }
 
         .coin {
             color: var(--coin-color);
+            font-size: 2.5rem;
         }
 
         .click-area {
             margin: 30px 0;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .click-button {
-            background: var(--accent-color);
+            background: linear-gradient(45deg, var(--highlight-color), #ff9e7d);
             border: none;
             border-radius: 50%;
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             font-size: 1.8rem;
             color: white;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.1s;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.1s;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
+            font-weight: bold;
         }
 
         .click-button:active {
             transform: scale(0.95);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
         .click-button.disabled {
-            opacity: 0.5;
+            opacity: 0.6;
             cursor: not-allowed;
         }
 
@@ -215,47 +256,61 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
+            backdrop-filter: blur(2px);
         }
 
         .click-power {
-            font-size: 1rem;
-            margin-top: 10px;
+            font-size: 1.1rem;
+            margin-top: 12px;
+            opacity: 0.9;
         }
 
         .auto-clickers {
-            margin-top: 20px;
+            margin-top: 25px;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
         }
 
         .auto-clicker {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.1);
             border-radius: 10px;
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .auto-clicker:hover {
+            transform: translateX(5px);
         }
 
         .shop-section {
             background: var(--card-bg);
-            border-radius: 20px;
+            border-radius: 25px;
             padding: 30px;
-            box-shadow: 0 4px 15px var(--shadow-color);
+            box-shadow: 0 4px 25px var(--shadow-color);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .shop-section h2 {
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
+            margin-bottom: 25px;
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--text-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .upgrade-category {
@@ -264,23 +319,26 @@
 
         .upgrade-category h3 {
             margin-bottom: 15px;
-            border-bottom: 1px solid var(--text-color);
-            padding-bottom: 5px;
+            border-bottom: 2px solid var(--highlight-color);
+            padding-bottom: 8px;
+            font-size: 1.3rem;
         }
 
         .upgrade {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 18px;
+            margin: 12px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .upgrade:hover {
             transform: translateY(-3px);
+            box-shadow: 0 6px 15px var(--shadow-color);
         }
 
         .upgrade-info {
@@ -290,93 +348,109 @@
         .upgrade-name {
             font-weight: bold;
             margin-bottom: 5px;
+            font-size: 1.1rem;
         }
 
         .upgrade-description {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             opacity: 0.8;
         }
 
         .upgrade-level {
             margin-right: 15px;
             font-weight: bold;
+            color: var(--highlight-color);
         }
 
         .upgrade-cost {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             font-weight: bold;
             color: var(--coin-color);
+            margin-right: 15px;
         }
 
         .buy-button {
-            background: var(--accent-color);
+            background: linear-gradient(45deg, var(--highlight-color), #ff9e7d);
             border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
+            border-radius: 8px;
+            padding: 10px 18px;
             color: white;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            min-width: 100px;
         }
 
         .buy-button:hover {
-            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .buy-button:disabled {
-            background: #cccccc;
+            background: #666;
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
         .achievements {
-            margin-top: 30px;
+            margin-top: 40px;
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 15px var(--shadow-color);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 4px 25px var(--shadow-color);
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .achievements h2 {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--text-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .achievement-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
 
         .achievement {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
             text-align: center;
-            opacity: 0.5;
-            transition: opacity 0.3s;
+            opacity: 0.4;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .achievement.unlocked {
             opacity: 1;
-            box-shadow: 0 0 10px var(--accent-color);
+            box-shadow: 0 0 20px var(--highlight-color);
+            transform: scale(1.05);
         }
 
         .achievement-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 12px;
             color: var(--coin-color);
         }
 
         .achievement-name {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
         }
 
         .achievement-desc {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
+            opacity: 0.8;
         }
 
         .floating-coin {
@@ -384,8 +458,10 @@
             pointer-events: none;
             z-index: 1000;
             animation: floatUp 1s forwards;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--coin-color);
+            font-weight: bold;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         @keyframes floatUp {
@@ -394,9 +470,25 @@
                 opacity: 1;
             }
             100% {
-                transform: translateY(-100px) scale(0);
+                transform: translateY(-120px) scale(0);
                 opacity: 0;
             }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--highlight-color), #ff9e7d);
+            border-radius: 3px;
+            transition: width 0.3s;
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -408,7 +500,7 @@
         <header>
             <a href="index.html" class="back-button">
                 <i class="fas fa-arrow-left"></i>
-                Назад
+                Назад к профилю
             </a>
             <button class="theme-toggle" id="themeToggle">
                 <i class="fas fa-moon"></i>
@@ -444,6 +536,9 @@
                         <span>КЛИК!</span>
                         <span class="click-power">+<span id="clickPower">1</span> монет</span>
                     </button>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="cooldownProgress"></div>
+                    </div>
                 </div>
                 
                 <div class="auto-clickers">
@@ -455,6 +550,10 @@
                     <div class="auto-clicker">
                         <span>Продвинутый авто-кликер</span>
                         <span id="advancedAutoClickerCount">0</span>
+                    </div>
+                    <div class="auto-clicker">
+                        <span>Профессиональный авто-кликер</span>
+                        <span id="proAutoClickerCount">0</span>
                     </div>
                 </div>
             </div>
@@ -509,14 +608,43 @@
                     <div class="upgrade" id="advancedAutoClickerUpgrade">
                         <div class="upgrade-info">
                             <div class="upgrade-name">Продвинутый авто-кликер</div>
-                            <div class="upgrade-description">Автоматически кликает 5 раз в секунду</div>
+                            <div class="upgrade-description">Автоматически кликает 3 раза в секунду</div>
                         </div>
                         <div class="upgrade-level">Кол-во: <span id="advancedAutoClickerLevel">0</span></div>
                         <div class="upgrade-cost">
                             <i class="fas fa-coins"></i>
-                            <span id="advancedAutoClickerCost">250</span>
+                            <span id="advancedAutoClickerCost">200</span>
                         </div>
                         <button class="buy-button" id="buyAdvancedAutoClicker">Купить</button>
+                    </div>
+
+                    <div class="upgrade" id="proAutoClickerUpgrade">
+                        <div class="upgrade-info">
+                            <div class="upgrade-name">Профессиональный авто-кликер</div>
+                            <div class="upgrade-description">Автоматически кликает 10 раз в секунду</div>
+                        </div>
+                        <div class="upgrade-level">Кол-во: <span id="proAutoClickerLevel">0</span></div>
+                        <div class="upgrade-cost">
+                            <i class="fas fa-coins"></i>
+                            <span id="proAutoClickerCost">1000</span>
+                        </div>
+                        <button class="buy-button" id="buyProAutoClicker">Купить</button>
+                    </div>
+                </div>
+
+                <div class="upgrade-category">
+                    <h3>Бонусы</h3>
+                    <div class="upgrade" id="criticalClickUpgrade">
+                        <div class="upgrade-info">
+                            <div class="upgrade-name">Критический удар</div>
+                            <div class="upgrade-description">Шанс нанести 5x урон при клике</div>
+                        </div>
+                        <div class="upgrade-level">Ур. <span id="criticalClickLevel">0</span></div>
+                        <div class="upgrade-cost">
+                            <i class="fas fa-coins"></i>
+                            <span id="criticalClickCost">500</span>
+                        </div>
+                        <button class="buy-button" id="buyCriticalClick">Купить</button>
                     </div>
                 </div>
             </div>
@@ -545,6 +673,11 @@
                     <div class="achievement-name">Автоматизация</div>
                     <div class="achievement-desc">Купите первый авто-кликер</div>
                 </div>
+                <div class="achievement" id="achievement-critical">
+                    <div class="achievement-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="achievement-name">Критический удар</div>
+                    <div class="achievement-desc">Активируйте критический удар</div>
+                </div>
             </div>
         </div>
     </div>
@@ -568,18 +701,27 @@
         let basicAutoClickerCost = parseInt(localStorage.getItem('basicAutoClickerCost')) || 50;
         
         let advancedAutoClickers = parseInt(localStorage.getItem('advancedAutoClickers')) || 0;
-        let advancedAutoClickerCost = parseInt(localStorage.getItem('advancedAutoClickerCost')) || 250;
+        let advancedAutoClickerCost = parseInt(localStorage.getItem('advancedAutoClickerCost')) || 200;
+
+        let proAutoClickers = parseInt(localStorage.getItem('proAutoClickers')) || 0;
+        let proAutoClickerCost = parseInt(localStorage.getItem('proAutoClickerCost')) || 1000;
+
+        let criticalClickLevel = parseInt(localStorage.getItem('criticalClickLevel')) || 0;
+        let criticalClickCost = parseInt(localStorage.getItem('criticalClickCost')) || 500;
         
         // Достижения
         const achievements = {
             '100-clicks': localStorage.getItem('achievement-100-clicks') === 'true',
             '1000-coins': localStorage.getItem('achievement-1000-coins') === 'true',
             'first-upgrade': localStorage.getItem('achievement-first-upgrade') === 'true',
-            'auto-clicker': localStorage.getItem('achievement-auto-clicker') === 'true'
+            'auto-clicker': localStorage.getItem('achievement-auto-clicker') === 'true',
+            'critical': localStorage.getItem('achievement-critical') === 'true'
         };
         
         // Состояние кнопки
         let isClickButtonEnabled = true;
+        let cooldownProgress = 0;
+        let cooldownInterval;
         
         // Создание частиц
         function createParticles() {
@@ -590,16 +732,15 @@
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 10 + 5;
+                const size = Math.random() * 15 + 5;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.top = `${Math.random() * 100}%`;
                 
-                particle.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                particle.style.animationDuration = `${Math.random() * 25 + 15}s`;
                 particle.style.animationDelay = `${Math.random() * 5}s`;
-                particle.style.opacity = Math.random() * 0.5 + 0.2;
                 
                 particlesContainer.appendChild(particle);
             }
@@ -610,9 +751,9 @@
         const themeIcon = themeToggle.querySelector('i');
         
         themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('dark-theme');
+            document.body.classList.toggle('light-theme');
             
-            if (document.body.classList.contains('dark-theme')) {
+            if (document.body.classList.contains('light-theme')) {
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
             } else {
@@ -620,47 +761,67 @@
                 themeIcon.classList.add('fa-moon');
             }
             
-            localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+            localStorage.setItem('theme', document.body.classList.contains('light-theme') ? 'light' : 'dark');
         });
         
         // Загрузка сохраненной темы
         const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
             themeIcon.classList.remove('fa-moon');
             themeIcon.classList.add('fa-sun');
         }
         
         // Обновление интерфейса
         function updateUI() {
-            document.getElementById('coins').textContent = coins;
-            document.getElementById('coinCount').textContent = coins;
-            document.getElementById('coinsPerSecond').textContent = coinsPerSecond;
-            document.getElementById('totalClicks').textContent = totalClicks;
+            document.getElementById('coins').textContent = formatNumber(coins);
+            document.getElementById('coinCount').textContent = formatNumber(coins);
+            document.getElementById('coinsPerSecond').textContent = formatNumber(coinsPerSecond);
+            document.getElementById('totalClicks').textContent = formatNumber(totalClicks);
             document.getElementById('clickPower').textContent = clickPower;
             
             document.getElementById('clickPowerLevel').textContent = clickPowerLevel;
-            document.getElementById('clickPowerCost').textContent = clickPowerCost;
+            document.getElementById('clickPowerCost').textContent = formatNumber(clickPowerCost);
             
             document.getElementById('clickCooldownLevel').textContent = clickCooldownLevel;
-            document.getElementById('clickCooldownCost').textContent = clickCooldownCost;
+            document.getElementById('clickCooldownCost').textContent = formatNumber(clickCooldownCost);
             
             document.getElementById('basicAutoClickerCount').textContent = basicAutoClickers;
             document.getElementById('basicAutoClickerLevel').textContent = basicAutoClickers;
-            document.getElementById('basicAutoClickerCost').textContent = basicAutoClickerCost;
+            document.getElementById('basicAutoClickerCost').textContent = formatNumber(basicAutoClickerCost);
             
             document.getElementById('advancedAutoClickerCount').textContent = advancedAutoClickers;
             document.getElementById('advancedAutoClickerLevel').textContent = advancedAutoClickers;
-            document.getElementById('advancedAutoClickerCost').textContent = advancedAutoClickerCost;
+            document.getElementById('advancedAutoClickerCost').textContent = formatNumber(advancedAutoClickerCost);
+
+            document.getElementById('proAutoClickerCount').textContent = proAutoClickers;
+            document.getElementById('proAutoClickerLevel').textContent = proAutoClickers;
+            document.getElementById('proAutoClickerCost').textContent = formatNumber(proAutoClickerCost);
+
+            document.getElementById('criticalClickLevel').textContent = criticalClickLevel;
+            document.getElementById('criticalClickCost').textContent = formatNumber(criticalClickCost);
             
             // Обновление состояний кнопок
             document.getElementById('buyClickPower').disabled = coins < clickPowerCost;
             document.getElementById('buyClickCooldown').disabled = coins < clickCooldownCost;
             document.getElementById('buyBasicAutoClicker').disabled = coins < basicAutoClickerCost;
             document.getElementById('buyAdvancedAutoClicker').disabled = coins < advancedAutoClickerCost;
+            document.getElementById('buyProAutoClicker').disabled = coins < proAutoClickerCost;
+            document.getElementById('buyCriticalClick').disabled = coins < criticalClickCost;
             
             // Обновление достижений
             updateAchievements();
+        }
+
+        // Форматирование чисел
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            }
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num;
         }
         
         // Обработчик клика
@@ -669,12 +830,26 @@
         clickButton.addEventListener('click', function() {
             if (!isClickButtonEnabled) return;
             
+            // Расчет урона с учетом крита
+            let damage = clickPower;
+            let isCritical = false;
+            
+            if (criticalClickLevel > 0 && Math.random() < (criticalClickLevel * 0.05)) {
+                damage *= 5;
+                isCritical = true;
+                if (!achievements['critical']) {
+                    achievements['critical'] = true;
+                    localStorage.setItem('achievement-critical', 'true');
+                    coins += 200; // Награда за достижение
+                }
+            }
+            
             // Добавление монет
-            coins += clickPower;
+            coins += damage;
             totalClicks++;
             
             // Создание плавающей монеты
-            createFloatingCoin(clickPower);
+            createFloatingCoin(damage, isCritical);
             
             // Сохранение и обновление
             saveGame();
@@ -682,22 +857,40 @@
             checkAchievements();
             
             // Кулдаун
-            isClickButtonEnabled = false;
-            clickButton.classList.add('disabled');
-            
-            setTimeout(() => {
-                isClickButtonEnabled = true;
-                clickButton.classList.remove('disabled');
-            }, clickCooldown);
+            startCooldown();
         });
         
+        // Запуск кулдауна
+        function startCooldown() {
+            isClickButtonEnabled = false;
+            clickButton.classList.add('disabled');
+            cooldownProgress = 0;
+            
+            const progressBar = document.getElementById('cooldownProgress');
+            progressBar.style.width = '0%';
+            
+            cooldownInterval = setInterval(() => {
+                cooldownProgress += 10;
+                progressBar.style.width = `${cooldownProgress}%`;
+                
+                if (cooldownProgress >= 100) {
+                    clearInterval(cooldownInterval);
+                    isClickButtonEnabled = true;
+                    clickButton.classList.remove('disabled');
+                    progressBar.style.width = '0%';
+                }
+            }, clickCooldown / 10);
+        }
+        
         // Создание плавающей монеты
-        function createFloatingCoin(value) {
+        function createFloatingCoin(value, isCritical = false) {
             const coin = document.createElement('div');
             coin.classList.add('floating-coin');
-            coin.textContent = `+${value}`;
-            coin.style.left = `${Math.random() * 80 + 10}%`;
-            coin.style.top = `70%`;
+            coin.textContent = `${isCritical ? '⚡' : '+'}${value}`;
+            coin.style.left = `${Math.random() * 60 + 20}%`;
+            coin.style.top = `60%`;
+            coin.style.color = isCritical ? '#ff4444' : '';
+            coin.style.fontSize = isCritical ? '2.2rem' : '1.8rem';
             
             document.body.appendChild(coin);
             
@@ -711,9 +904,9 @@
             if (coins < clickPowerCost) return;
             
             coins -= clickPowerCost;
-            clickPower += 1;
+            clickPower += Math.floor(clickPower * 0.5) + 1;
             clickPowerLevel++;
-            clickPowerCost = Math.floor(clickPowerCost * 1.5);
+            clickPowerCost = Math.floor(clickPowerCost * 1.8);
             
             saveGame();
             updateUI();
@@ -724,9 +917,9 @@
             if (coins < clickCooldownCost) return;
             
             coins -= clickCooldownCost;
-            clickCooldown = Math.max(100, clickCooldown - 100);
+            clickCooldown = Math.max(200, clickCooldown - 100);
             clickCooldownLevel++;
-            clickCooldownCost = Math.floor(clickCooldownCost * 1.5);
+            clickCooldownCost = Math.floor(clickCooldownCost * 1.6);
             
             saveGame();
             updateUI();
@@ -738,10 +931,10 @@
             
             coins -= basicAutoClickerCost;
             basicAutoClickers++;
-            basicAutoClickerCost = Math.floor(basicAutoClickerCost * 1.3);
+            basicAutoClickerCost = Math.floor(basicAutoClickerCost * 1.4);
             
             // Пересчет монет в секунду
-            coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 5);
+            coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 3) + (proAutoClickers * 10);
             
             saveGame();
             updateUI();
@@ -753,104 +946,29 @@
             
             coins -= advancedAutoClickerCost;
             advancedAutoClickers++;
-            advancedAutoClickerCost = Math.floor(advancedAutoClickerCost * 1.3);
+            advancedAutoClickerCost = Math.floor(advancedAutoClickerCost * 1.4);
             
             // Пересчет монет в секунду
-            coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 5);
+            coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 3) + (proAutoClickers * 10);
             
             saveGame();
             updateUI();
             checkAchievements();
         });
-        
-        // Автоматическое начисление монет
-        function autoCollectCoins() {
-            if (coinsPerSecond > 0) {
-                coins += coinsPerSecond;
-                saveGame();
-                updateUI();
-                checkAchievements();
-            }
-        }
-        
-        // Проверка достижений
-        function checkAchievements() {
-            // 100 кликов
-            if (totalClicks >= 100 && !achievements['100-clicks']) {
-                achievements['100-clicks'] = true;
-                localStorage.setItem('achievement-100-clicks', 'true');
-                coins += 100; // Награда
-            }
+
+        document.getElementById('buyProAutoClicker').addEventListener('click', function() {
+            if (coins < proAutoClickerCost) return;
             
-            // 1000 монет
-            if (coins >= 1000 && !achievements['1000-coins']) {
-                achievements['1000-coins'] = true;
-                localStorage.setItem('achievement-1000-coins', 'true');
-                coins += 500; // Награда
-            }
+            coins -= proAutoClickerCost;
+            proAutoClickers++;
+            proAutoClickerCost = Math.floor(proAutoClickerCost * 1.4);
             
-            // Первое улучшение
-            if ((clickPowerLevel > 1 || clickCooldownLevel > 1) && !achievements['first-upgrade']) {
-                achievements['first-upgrade'] = true;
-                localStorage.setItem('achievement-first-upgrade', 'true');
-                coins += 50; // Награда
-            }
+            // Пересчет монет в секунду
+            coinsPerSecond = basicAutoClickers + (advancedAutoClickers * 3) + (proAutoClickers * 10);
             
-            // Первый авто-кликер
-            if ((basicAutoClickers > 0 || advancedAutoClickers > 0) && !achievements['auto-clicker']) {
-                achievements['auto-clicker'] = true;
-                localStorage.setItem('achievement-auto-clicker', 'true');
-                coins += 100; // Награда
-            }
-        }
-        
-        // Обновление отображения достижений
-        function updateAchievements() {
-            for (const achievement in achievements) {
-                const element = document.getElementById(`achievement-${achievement}`);
-                if (element) {
-                    if (achievements[achievement]) {
-                        element.classList.add('unlocked');
-                    } else {
-                        element.classList.remove('unlocked');
-                    }
-                }
-            }
-        }
-        
-        // Сохранение игры
-        function saveGame() {
-            localStorage.setItem('coins', coins);
-            localStorage.setItem('totalClicks', totalClicks);
-            localStorage.setItem('coinsPerSecond', coinsPerSecond);
-            
-            localStorage.setItem('clickPower', clickPower);
-            localStorage.setItem('clickPowerLevel', clickPowerLevel);
-            localStorage.setItem('clickPowerCost', clickPowerCost);
-            
-            localStorage.setItem('clickCooldown', clickCooldown);
-            localStorage.setItem('clickCooldownLevel', clickCooldownLevel);
-            localStorage.setItem('clickCooldownCost', clickCooldownCost);
-            
-            localStorage.setItem('basicAutoClickers', basicAutoClickers);
-            localStorage.setItem('basicAutoClickerCost', basicAutoClickerCost);
-            
-            localStorage.setItem('advancedAutoClickers', advancedAutoClickers);
-            localStorage.setItem('advancedAutoClickerCost', advancedAutoClickerCost);
-        }
-        
-        // Инициализация игры
-        function initGame() {
-            createParticles();
+            saveGame();
             updateUI();
-            updateAchievements();
-            
-            // Запуск авто-сбора
-            setInterval(autoCollectCoins, 1000);
-        }
-        
-        // Запуск игры
-        initGame();
-    </script>
-</body>
-  </html>
+            checkAchievements();
+        });
+
+        document.getElementById('buyCriticalClick').addEventListener('click', function
